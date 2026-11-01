@@ -47,13 +47,13 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(height: 30),
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(labelText: 'email', border: OutlineInputBorder()),
+                decoration: const InputDecoration(labelText: 'E-mail', border: OutlineInputBorder()),
               ),
               const SizedBox(height: 15),
               TextField(
                 controller: senhaController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'senha', border: OutlineInputBorder()),
+                decoration: const InputDecoration(labelText: 'Senha', border: OutlineInputBorder()),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -64,7 +64,77 @@ class LoginScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const CalendarScreen()),
                   );
                 },
-                child: const Text('Entrar', style: TextStyle(color: Colors.white)),
+                child: const Text('Entrar', style: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              const SizedBox(height: 15),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                  );
+                },
+                child: const Text('Não tem uma conta? Criar conta', style: TextStyle(color: Colors.purple)),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ----------------------------------------------------
+// TELA DE CADASTRO / CRIAR CONTA
+// ----------------------------------------------------
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController nomeController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController senhaController = TextEditingController();
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Criar Conta')),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Cadastre-se no Sistema',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.purple),
+              ),
+              const SizedBox(height: 30),
+              TextField(
+                controller: nomeController,
+                decoration: const InputDecoration(labelText: 'Nome Completo', border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 15),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(labelText: 'E-mail', border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 15),
+              TextField(
+                controller: senhaController,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: 'Senha', border: OutlineInputBorder()),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.purple, minimumSize: const Size.fromHeight(50)),
+                onPressed: () {
+                  // Simula o cadastro com sucesso e volta para o login
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Conta criada com sucesso! Faça login.')),
+                  );
+                  Navigator.pop(context);
+                },
+                child: const Text('Cadastrar', style: TextStyle(color: Colors.white, fontSize: 16)),
               ),
             ],
           ),
@@ -96,9 +166,7 @@ class CalendarScreen extends StatelessWidget {
                 initialDate: DateTime.now(),
                 firstDate: DateTime(2020),
                 lastDate: DateTime(2030),
-                onDateChanged: (DateTime date) {
-                  // Ação ao selecionar a data
-                },
+                onDateChanged: (DateTime date) {},
               ),
             ),
           ),
@@ -112,7 +180,7 @@ class CalendarScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const TaskListScreen()),
                 );
               },
-              child: const Text('Selecionar o dia', style: TextStyle(color: Colors.white)),
+              child: const Text('Selecionar o dia', style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ),
         ],
@@ -152,7 +220,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
       if (a.isCompleted == b.isCompleted) {
         return a.title.compareTo(b.title);
       }
-      return a.isCompleted ? 1 : -1; // Pendentes primeiro, concluídas depois
+      return a.isCompleted ? 1 : -1;
     });
   }
 
@@ -199,7 +267,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
         children: [
           const Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('Dia 11/11/2023', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            child: Text('Dia Atual', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           Expanded(
             child: ListView.builder(
